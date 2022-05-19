@@ -3,6 +3,9 @@ package com.example.getInLine.controller.api;
 import com.example.getInLine.constant.PlaceType;
 import com.example.getInLine.dto.APIDataResponse;
 import com.example.getInLine.dto.PlaceDTO;
+import com.example.getInLine.dto.PlaceRequest;
+import com.example.getInLine.dto.PlaceResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -13,57 +16,50 @@ import java.util.List;
 public class APIPlaceController {
 
     @GetMapping("/places")
-    public APIDataResponse<List<PlaceDTO>> getPlaces() {
-        return APIDataResponse.of(List.of(PlaceDTO.of(
+    public APIDataResponse<List<PlaceResponse>> getPlaces() {
+        return APIDataResponse.of(List.of(PlaceResponse.of(
                 PlaceType.COMMON,
                 "랄라배드민턴장",
                 "서울시 강남구 강남대로 1234",
                 "010-1234-5678",
                 30,
-<<<<<<< HEAD
-                "신장개업",
-                LocalDateTime.now(),
-                LocalDateTime.now()
-=======
                 "신장개업"
->>>>>>> #2-api
         )));
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/places")
-    public Boolean createPlace() {
-        return true;
+    public APIDataResponse<Void> createPlace(@RequestBody PlaceRequest placeRequest) {
+        return APIDataResponse.empty();
     }
 
     @GetMapping("/places/{placeId}")
-    public APIDataResponse<PlaceDTO> getPlace(@PathVariable String placeId) {
-        if (placeId.equals("2")) {
-            return APIDataResponse.of(null);
+    public APIDataResponse<PlaceResponse> getPlace(@PathVariable Long placeId) {
+        if (placeId.equals(2L)) {
+            return APIDataResponse.empty();
         }
-        return APIDataResponse.of(PlaceDTO.of(
+
+        return APIDataResponse.of(PlaceResponse.of(
                 PlaceType.COMMON,
                 "랄라배드민턴장",
                 "서울시 강남구 강남대로 1234",
                 "010-1234-5678",
                 30,
-<<<<<<< HEAD
-                "신장개업",
-                LocalDateTime.now(),
-                LocalDateTime.now()
-=======
                 "신장개업"
->>>>>>> #2-api
         ));
-
     }
 
-    @PostMapping("/places/{placeId}")
-    public Boolean modifyPlace(@PathVariable String placeId) {
-        return true;
+    @PutMapping("/places/{placeId}")
+    public APIDataResponse<Void> modifyPlace(
+            @PathVariable Long placeId,
+            @RequestBody PlaceRequest placeRequest
+    ) {
+        return APIDataResponse.empty();
     }
 
     @DeleteMapping("/places/{placeId}")
-    public Boolean removePlace(@PathVariable String placeId) {
-        return true;
+    public APIDataResponse<Void> removePlace(@PathVariable Long placeId) {
+        return APIDataResponse.empty();
     }
+
 }
