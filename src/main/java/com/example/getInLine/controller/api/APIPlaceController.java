@@ -20,9 +20,13 @@ public class APIPlaceController {
                 "서울시 강남구 강남대로 1234",
                 "010-1234-5678",
                 30,
+<<<<<<< HEAD
                 "신장개업",
                 LocalDateTime.now(),
                 LocalDateTime.now()
+=======
+                "신장개업"
+>>>>>>> #2-api
         )));
     }
 
@@ -42,9 +46,13 @@ public class APIPlaceController {
                 "서울시 강남구 강남대로 1234",
                 "010-1234-5678",
                 30,
+<<<<<<< HEAD
                 "신장개업",
                 LocalDateTime.now(),
                 LocalDateTime.now()
+=======
+                "신장개업"
+>>>>>>> #2-api
         ));
 
     }
