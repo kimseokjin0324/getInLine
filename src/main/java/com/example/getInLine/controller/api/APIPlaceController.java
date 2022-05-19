@@ -5,6 +5,7 @@ import com.example.getInLine.dto.APIDataResponse;
 import com.example.getInLine.dto.PlaceDTO;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -19,7 +20,9 @@ public class APIPlaceController {
                 "서울시 강남구 강남대로 1234",
                 "010-1234-5678",
                 30,
-                "신장개업"
+                "신장개업",
+                LocalDateTime.now(),
+                LocalDateTime.now()
         )));
     }
 
@@ -39,7 +42,9 @@ public class APIPlaceController {
                 "서울시 강남구 강남대로 1234",
                 "010-1234-5678",
                 30,
-                "신장개업"
+                "신장개업",
+                LocalDateTime.now(),
+                LocalDateTime.now()
         ));
 
     }
