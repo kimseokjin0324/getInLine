@@ -1,4 +1,5 @@
 package com.example.getInLine.dto;
+
 import com.example.getInLine.constant.ErrorCode;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,11 +17,11 @@ public class APIDataResponse<T> extends APIErrorResponse {
         this.data = data;
     }
 
-    public static <T> APIDataResponse <T> of(T data) {
+    public static <T> APIDataResponse<T> of(T data) {
         return new APIDataResponse<>(data);
     }
 
-    public static <T> APIDataResponse<T> empty() {
+    public static  <T>APIDataResponse<T> empty() {
         return new APIDataResponse<>(null);
     }
 }
