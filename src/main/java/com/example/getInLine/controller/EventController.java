@@ -17,27 +17,27 @@ import java.util.Map;
 @Controller
 public class EventController {
 
-    @GetMapping
     public ModelAndView events() {
         Map<String, Object> map = new HashMap<>();
 
-        // TODO: 비지니스로직만 구현하고 데이터는 구현 안해서 임시로 데이터를 만듦
-        map.put("events", List.of(
-                EventResponse.of(
+        // TODO: 임시 데이터. 추후 삭제 예정
+        map.put("events", List.of(EventResponse.of(
+                        1L,
                         1L,
                         "오후 운동",
                         EventStatus.OPENED,
-                        LocalDateTime.of(2022, 05, 26, 13, 0, 0),
-                        LocalDateTime.of(2022, 05, 26, 16, 0, 0),
+                        LocalDateTime.of(2021, 1, 1, 13, 0, 0),
+                        LocalDateTime.of(2021, 1, 1, 16, 0, 0),
                         0,
                         24,
                         "마스크 꼭 착용하세요"
                 ), EventResponse.of(
                         2L,
+                        1L,
                         "오후 운동",
                         EventStatus.OPENED,
-                        LocalDateTime.of(2022, 05, 26, 13, 0, 0),
-                        LocalDateTime.of(2022, 05, 26, 16, 0, 0),
+                        LocalDateTime.of(2021, 1, 1, 13, 0, 0),
+                        LocalDateTime.of(2021, 1, 1, 16, 0, 0),
                         0,
                         24,
                         "마스크 꼭 착용하세요"
@@ -51,18 +51,18 @@ public class EventController {
     public ModelAndView eventDetail(@PathVariable Long eventId) {
         Map<String, Object> map = new HashMap<>();
 
-        // TODO: 비지니스로직만 구현하고 데이터는 구현 안해서 임시로 데이터를 만듦
-        map.put("event",
-                EventResponse.of(
-                        1L,
-                        "오후 운동",
-                        EventStatus.OPENED,
-                        LocalDateTime.of(2022, 05, 26, 13, 0, 0),
-                        LocalDateTime.of(2022, 05, 26, 16, 0, 0),
-                        0,
-                        24,
-                        "마스크 꼭 착용하세요"
-                ));
+        // TODO: 임시 데이터. 추후 삭제 예정
+        map.put("event", EventResponse.of(
+                eventId,
+                1L,
+                "오후 운동",
+                EventStatus.OPENED,
+                LocalDateTime.of(2021, 1, 1, 13, 0, 0),
+                LocalDateTime.of(2021, 1, 1, 16, 0, 0),
+                0,
+                24,
+                "마스크 꼭 착용하세요"
+        ));
 
         return new ModelAndView("event/detail", map);
     }

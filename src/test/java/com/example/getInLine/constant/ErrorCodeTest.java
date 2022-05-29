@@ -20,10 +20,8 @@ class ErrorCodeTest {
         //Given
         Exception e = new Exception("This is test message");
 
-
         //When
         String actual = sut.getMessage(e);
-
 
         //Then
         assertThat(actual).isEqualTo(expected);
@@ -35,7 +33,7 @@ class ErrorCodeTest {
                 arguments(ErrorCode.BAD_REQUEST, "bad request - This is test message"),
                 arguments(ErrorCode.SPRING_BAD_REQUEST, "Spring-detected bad request - This is test message"),
                 arguments(ErrorCode.VALIDATION_ERROR, "Validation Error - This is test message"),
-                arguments(ErrorCode.NOT_FOUND, "Requested resource is not found - This is test message."),
+                arguments(ErrorCode.NOT_FOUND, "Requested resource is not found - This is test message"),
                 arguments(ErrorCode.INTERNAL_ERROR, "internal error - This is test message"),
                 arguments(ErrorCode.SPRING_INTERNAL_ERROR, "Spring-detected internal error - This is test message"),
                 arguments(ErrorCode.DATA_ACCESS_ERROR, "Data access error - This is test message")
