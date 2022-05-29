@@ -5,8 +5,8 @@ import com.example.getInLine.dto.AdminRequest;
 import com.example.getInLine.dto.LoginRequest;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api")
-@RestController
+//@RequestMapping("/api")
+//@RestController
 public class APIAuthController {
 
     //-이 return 값을 뷰 resolving 하는게 아니고
