@@ -1,15 +1,12 @@
 package com.example.getInLine.repository;
 
-import com.example.getInLine.constant.EventStatus;
 import com.example.getInLine.domain.Event;
-import com.example.getInLine.dto.EventDTO;
+import com.querydsl.core.types.dsl.ComparableExpression;
+import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 
 public interface EventRepository extends
