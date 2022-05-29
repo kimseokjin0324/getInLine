@@ -3,6 +3,7 @@ package com.example.getInLine.error;
 import com.example.getInLine.constant.ErrorCode;
 import com.example.getInLine.dto.APIErrorResponse;
 import com.example.getInLine.exception.GeneralException;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import javax.validation.ConstraintViolationException;
 
 
 //- API에 대한 ControllerAdvice를 만드는 과정
-@RestControllerAdvice(annotations = RestController.class)    //-API 컨트롤러의 동작을 감시
+@RestControllerAdvice(annotations = {RestController.class, RepositoryRestController.class})
 public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
     //- ConstraintViolationException 터졌을때
