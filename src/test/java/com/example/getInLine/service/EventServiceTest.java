@@ -203,11 +203,11 @@ class EventServiceTest {
     void givenDataRelatedException_whenSearchingEvents_thenThrowsGeneralException() {
 
         //Given
-        RuntimeException e = new RuntimeException("This is test");
+        RuntimeException e = new RuntimeException("This is test.");
         given(eventRepository.findAll(any(Predicate.class))).willThrow(e);
-        //When
-        Throwable thrown = catchThrowable(() -> sut.getEvents(null, null, null, null, null));
 
+        //When
+        Throwable thrown = catchThrowable(() -> sut.getEvents(new BooleanBuilder()));
         //Then
         assertThat(thrown)
                 .isInstanceOf(GeneralException.class)
