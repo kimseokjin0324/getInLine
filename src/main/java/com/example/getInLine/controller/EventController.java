@@ -1,7 +1,6 @@
 package com.example.getInLine.controller;
 
 import com.example.getInLine.constant.ErrorCode;
-import com.example.getInLine.constant.EventStatus;
 import com.example.getInLine.domain.Event;
 import com.example.getInLine.dto.EventResponse;
 import com.example.getInLine.exception.GeneralException;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +26,7 @@ public class EventController {
 
     private final EventService eventService;
 
+    @GetMapping
     public ModelAndView events(@QuerydslPredicate(root = Event.class) Predicate predicate) {
         Map<String, Object> map = new HashMap<>();
         List<EventResponse> events = eventService.getEvents(predicate)

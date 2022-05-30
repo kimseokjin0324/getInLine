@@ -31,19 +31,20 @@ public class EventService {
         }
     }
 
+
     public List<EventDTO> getEvents(
             Long placeId,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
-            LocalDateTime eventEndDatetime) {
+            LocalDateTime eventEndDatetime
+    ) {
         try {
             return null;
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
         }
     }
-
 
     public Optional<EventDTO> getEvent(Long eventId) {
         try {
