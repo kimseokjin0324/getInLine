@@ -19,16 +19,15 @@ public class BaseExceptionHandler {
     public ModelAndView general(GeneralException e) {
 
         ErrorCode errorCode = e.getErrorCode();
-        HttpStatus httpStatus = errorCode.isClientSideError() ? HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR;
 
         return new ModelAndView(
                 "error",
                 Map.of(
-                        "statusCode", httpStatus.value(),
+                        "statusCode", errorCode.getHttpStatus().value(),
                         "errorCode", errorCode,
                         "message", errorCode.getMessage()
                 ),
-                httpStatus);
+                errorCode.getHttpStatus());
     }
 
     //- GeneralException이 아닌 일반 Exception을 처리하는 메소드
@@ -36,15 +35,14 @@ public class BaseExceptionHandler {
     public ModelAndView exception(Exception e) {
 
         ErrorCode errorCode = ErrorCode.INTERNAL_ERROR;
-        HttpStatus httpStatus =HttpStatus.INTERNAL_SERVER_ERROR;
 
         return new ModelAndView(
                 "error",
                 Map.of(
-                        "statusCode", httpStatus.value(),
+                        "statusCode", errorCode.getHttpStatus().value(),
                         "errorCode", errorCode,
                         "message", errorCode.getMessage(e)
                 ),
-                httpStatus);
+                errorCode.getHttpStatus());
     }
 }
