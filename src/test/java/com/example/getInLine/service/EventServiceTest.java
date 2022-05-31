@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +24,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class EventServiceTest {
@@ -51,8 +51,6 @@ class EventServiceTest {
         assertThat(list).hasSize(2);
         then(eventRepository).should().findAll(any(Predicate.class));
     }
-
-
 
 
     @DisplayName("이벤트 ID로 존재하는 이벤트를 조회하면, 해당 이벤트 정보를 출력하여보여준다")
@@ -84,18 +82,19 @@ class EventServiceTest {
 
     }
 
-    @DisplayName("이벤트 정보를 주면, 이벤트를 생성하고 결과를 true 로 보여준다")
+    @DisplayName("이벤트 정보를 주면, 이벤트를 생성하고 결과를 true 로 보여준다.")
     @Test
     void givenEvent_whenCreating_thenCreatesEventAndReturnsTrue() {
-        //Given
-        Event event = createEvent(1L, "오후 운동", false);
-        given(eventRepository.save(event)).willReturn(event);
+        // Given
+        EventDto eventDto = EventDto.of(createEvent(1L,"오후 운동", false));
+        given(eventRepository.save(any(Event.class))).willReturn(any());
 
-        //When
-        boolean result = sut.createEvent(EventDto.of(event));
-        //Then
+        // When
+        boolean result = sut.createEvent(eventDto);
+
+        // Then
         assertThat(result).isTrue();
-        then(eventRepository).should().save(event);
+        then(eventRepository).should().save(any(Event.class));
     }
 
     @DisplayName("이벤트 정보를 주지않으면, 생성중단하고 결과를 false 로 보여준다")
@@ -124,6 +123,10 @@ class EventServiceTest {
         boolean result = sut.modifyEvent(eventId, EventDto.of(changedEvent));
         //Then
         assertThat(result).isTrue();
+        assertThat(originalEvent.getEventName()).isEqualTo(changedEvent.getEventName());
+        assertThat(originalEvent.getEventStartDatetime()).isEqualTo(changedEvent.getEventStartDatetime());
+        assertThat(originalEvent.getEventEndDatetime()).isEqualTo(changedEvent.getEventEndDatetime());
+        assertThat(originalEvent.getEventStatus()).isEqualTo(changedEvent.getEventStatus());
         then(eventRepository).should().findById(eventId);
         then(eventRepository).should().save(changedEvent);
     }
@@ -166,7 +169,8 @@ class EventServiceTest {
         boolean result = sut.removeEvent(eventId);
         //Then
         assertThat(result).isTrue();
-        then(eventRepository).should().deleteById(eventId);;
+        then(eventRepository).should().deleteById(eventId);
+        ;
     }
 
     @DisplayName("이벤트 ID를 주지않으면, 삭제를 중단하고 결과를 false 로 보여준다")
@@ -234,7 +238,6 @@ class EventServiceTest {
     }
 
 
-
     @DisplayName("이벤트 변경 중 데이터 오류가 발생하면, 줄서기 프로젝트 기본 에러로 전환하여 예외 던진다.")
     @Test
     void givenDataRelatedException_whenModifying_thenThrowsGeneralException() {
@@ -276,10 +279,13 @@ class EventServiceTest {
                 .hasMessageContaining(ErrorCode.DATA_ACCESS_ERROR.getMessage());
         then(eventRepository).should().deleteById(eventId);
     }
+
     private Event createEvent(long placeId, String eventName, boolean isMorning) {
         String hourStart = isMorning ? "09" : "13";
         String hourEnd = isMorning ? "12" : "16";
+
         return createEvent(
+                1L,
                 placeId,
                 eventName,
                 EventStatus.OPENED,
@@ -289,13 +295,14 @@ class EventServiceTest {
     }
 
     private Event createEvent(
+            long id,
             long placeId,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDateTime,
             LocalDateTime eventEndDateTime
     ) {
-        return Event.of(
+        Event event = Event.of(
                 placeId,
                 eventName,
                 eventStatus,
@@ -305,5 +312,9 @@ class EventServiceTest {
                 24,
                 "마스크 꼭 착용하세요"
         );
+        ReflectionTestUtils.setField(event, "id", id);
+
+        return event;
     }
+
 }
