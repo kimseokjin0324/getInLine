@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class APIDataResponse<T> extends APIErrorResponse {
+public class APIDataResponse<T> extends ApiErrorResponse {
 
     private final T data;
 

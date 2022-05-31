@@ -1,7 +1,7 @@
 package com.example.getInLine.error;
 
 import com.example.getInLine.constant.ErrorCode;
-import com.example.getInLine.dto.APIErrorResponse;
+import com.example.getInLine.dto.ApiErrorResponse;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,13 +32,13 @@ public class BaseErrorController implements ErrorController {
     }
 
     @RequestMapping("/error")
-    public ResponseEntity<APIErrorResponse> error(HttpServletResponse response) {
+    public ResponseEntity<ApiErrorResponse> error(HttpServletResponse response) {
         HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
         ErrorCode errorCode = httpStatus.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
 
         return ResponseEntity
                 .status(httpStatus)
-                .body(APIErrorResponse.of(false, errorCode));
+                .body(ApiErrorResponse.of(false, errorCode));
 
     }
 }
