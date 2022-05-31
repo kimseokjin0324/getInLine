@@ -2,7 +2,7 @@ package com.example.getInLine.service;
 
 import com.example.getInLine.constant.ErrorCode;
 import com.example.getInLine.constant.EventStatus;
-import com.example.getInLine.dto.EventDTO;
+import com.example.getInLine.dto.EventDto;
 import com.example.getInLine.exception.GeneralException;
 import com.example.getInLine.repository.EventRepository;
 import com.querydsl.core.types.Predicate;
@@ -21,10 +21,10 @@ public class EventService {
     private final EventRepository eventRepository;
 
 
-    public List<EventDTO> getEvents(Predicate predicate) {
+    public List<EventDto> getEvents(Predicate predicate) {
         try {
             return StreamSupport.stream(eventRepository.findAll(predicate).spliterator(), false)
-                    .map(EventDTO::of)
+                    .map(EventDto::of)
                     .toList();
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
@@ -32,7 +32,7 @@ public class EventService {
     }
 
 
-    public List<EventDTO> getEvents(
+    public List<EventDto> getEvents(
             Long placeId,
             String eventName,
             EventStatus eventStatus,
@@ -46,16 +46,16 @@ public class EventService {
         }
     }
 
-    public Optional<EventDTO> getEvent(Long eventId) {
+    public Optional<EventDto> getEvent(Long eventId) {
         try {
-            return eventRepository.findById(eventId).map(EventDTO::of);
+            return eventRepository.findById(eventId).map(EventDto::of);
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
         }
     }
 
 
-    public boolean createEvent(EventDTO eventDTO) {
+    public boolean createEvent(EventDto eventDTO) {
         try {
             if (eventDTO == null) {
                 return false;
@@ -68,7 +68,7 @@ public class EventService {
         }
     }
 
-    public boolean modifyEvent(Long eventId, EventDTO eventDTO) {
+    public boolean modifyEvent(Long eventId, EventDto eventDTO) {
         try {
             if (eventId == null || eventDTO == null) {
                 return false;

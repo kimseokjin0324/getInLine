@@ -2,14 +2,13 @@ package com.example.getInLine.controller.api;
 
 import com.example.getInLine.constant.ErrorCode;
 import com.example.getInLine.constant.EventStatus;
-import com.example.getInLine.dto.EventDTO;
+import com.example.getInLine.dto.EventDto;
 import com.example.getInLine.dto.EventResponse;
 import com.example.getInLine.service.EventService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
@@ -263,8 +261,8 @@ class APIEventControllerTest {
         then(eventService).should().removeEvent(eq(eventId));
     }
 
-    private EventDTO createEventDTO() {
-        return EventDTO.of(
+    private EventDto createEventDTO() {
+        return EventDto.of(
                 1L,
                 1L,
                 "오후 운동",

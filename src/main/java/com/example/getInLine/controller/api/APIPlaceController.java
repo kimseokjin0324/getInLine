@@ -2,13 +2,11 @@ package com.example.getInLine.controller.api;
 
 import com.example.getInLine.constant.PlaceType;
 import com.example.getInLine.dto.APIDataResponse;
-import com.example.getInLine.dto.PlaceDTO;
 import com.example.getInLine.dto.PlaceRequest;
 import com.example.getInLine.dto.PlaceResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**

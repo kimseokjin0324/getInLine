@@ -3,7 +3,7 @@ package com.example.getInLine.service;
 import com.example.getInLine.constant.ErrorCode;
 import com.example.getInLine.constant.EventStatus;
 import com.example.getInLine.domain.Event;
-import com.example.getInLine.dto.EventDTO;
+import com.example.getInLine.dto.EventDto;
 import com.example.getInLine.exception.GeneralException;
 import com.example.getInLine.repository.EventRepository;
 import com.querydsl.core.BooleanBuilder;
@@ -46,7 +46,7 @@ class EventServiceTest {
                 ));
 
         //When
-        List<EventDTO> list = sut.getEvents(new BooleanBuilder());
+        List<EventDto> list = sut.getEvents(new BooleanBuilder());
         //Then
         assertThat(list).hasSize(2);
         then(eventRepository).should().findAll(any(Predicate.class));
@@ -63,9 +63,9 @@ class EventServiceTest {
         Event event = createEvent(1L, "오전 운동", true);
         given(eventRepository.findById(eventId)).willReturn(Optional.of(event));
         //When
-        Optional<EventDTO> result = sut.getEvent(eventId);
+        Optional<EventDto> result = sut.getEvent(eventId);
         //Then
-        assertThat(result).hasValue(EventDTO.of(event));
+        assertThat(result).hasValue(EventDto.of(event));
         then(eventRepository).should().findById(eventId);
     }
 
@@ -77,7 +77,7 @@ class EventServiceTest {
         given(eventRepository.findById(eventId)).willReturn(Optional.empty());
 
         //When
-        Optional<EventDTO> result = sut.getEvent(eventId);
+        Optional<EventDto> result = sut.getEvent(eventId);
         //Then
         assertThat(result).isEmpty();
         then(eventRepository).should().findById(eventId);
@@ -92,7 +92,7 @@ class EventServiceTest {
         given(eventRepository.save(event)).willReturn(event);
 
         //When
-        boolean result = sut.createEvent(EventDTO.of(event));
+        boolean result = sut.createEvent(EventDto.of(event));
         //Then
         assertThat(result).isTrue();
         then(eventRepository).should().save(event);
@@ -121,7 +121,7 @@ class EventServiceTest {
         given(eventRepository.findById(eventId)).willReturn(Optional.of(originalEvent));
         given(eventRepository.save(changedEvent)).willReturn(changedEvent);
         //When
-        boolean result = sut.modifyEvent(eventId, EventDTO.of(changedEvent));
+        boolean result = sut.modifyEvent(eventId, EventDto.of(changedEvent));
         //Then
         assertThat(result).isTrue();
         then(eventRepository).should().findById(eventId);
@@ -134,7 +134,7 @@ class EventServiceTest {
         //Given
         Event event = createEvent(1L, "오후 운동", false);
         //When
-        boolean result = sut.modifyEvent(null, EventDTO.of(event));
+        boolean result = sut.modifyEvent(null, EventDto.of(event));
         //Then
         assertThat(result).isFalse();
         then(eventRepository).shouldHaveNoInteractions();
@@ -224,7 +224,7 @@ class EventServiceTest {
         given(eventRepository.save(any())).willThrow(e);
 
         // When
-        Throwable thrown = catchThrowable(() -> sut.createEvent(EventDTO.of(event)));
+        Throwable thrown = catchThrowable(() -> sut.createEvent(EventDto.of(event)));
 
         // Then
         assertThat(thrown)
@@ -248,7 +248,7 @@ class EventServiceTest {
 
 
         // When
-        Throwable thrown = catchThrowable(() -> sut.modifyEvent(eventId, EventDTO.of(wrongEvent)));
+        Throwable thrown = catchThrowable(() -> sut.modifyEvent(eventId, EventDto.of(wrongEvent)));
 
         // Then
         assertThat(thrown)
