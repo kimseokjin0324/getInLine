@@ -29,7 +29,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
 
     @Setter
     @Column(nullable = false)
@@ -40,7 +40,7 @@ public class Event {
     private String eventName;
 
     @Setter
-    @Column(nullable = false, columnDefinition = "varchar default 'OPENED'")
+    @Column(nullable = false, columnDefinition = "varchar(20) default 'OPENED'")
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 
