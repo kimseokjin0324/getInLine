@@ -33,10 +33,10 @@ class GeneralExceptionTest {
         ErrorCode errorCode = ErrorCode.VALIDATION_ERROR;
 
         return Stream.of(
-                arguments(new GeneralException(), "internal error", ErrorCode.INTERNAL_ERROR),
+                arguments(new GeneralException(), "Internal error", ErrorCode.INTERNAL_ERROR),
                 arguments(new GeneralException(msg), msg, ErrorCode.INTERNAL_ERROR),
                 arguments(new GeneralException(msg, t), msg, ErrorCode.INTERNAL_ERROR),
-                arguments(new GeneralException(t), "internal error - " + t.getMessage(), ErrorCode.INTERNAL_ERROR),
+                arguments(new GeneralException(t), "Internal error - " + t.getMessage(), ErrorCode.INTERNAL_ERROR),
                 arguments(new GeneralException(errorCode), errorCode.getMessage(), errorCode),
                 arguments(new GeneralException(errorCode, t), errorCode.getMessage() + " - " + t.getMessage(), errorCode)
         );
