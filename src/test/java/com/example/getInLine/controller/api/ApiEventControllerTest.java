@@ -2,8 +2,10 @@ package com.example.getInLine.controller.api;
 
 import com.example.getInLine.constant.ErrorCode;
 import com.example.getInLine.constant.EventStatus;
+import com.example.getInLine.constant.PlaceType;
 import com.example.getInLine.dto.EventDto;
 import com.example.getInLine.dto.EventResponse;
+import com.example.getInLine.dto.PlaceDto;
 import com.example.getInLine.service.EventService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
@@ -108,7 +110,7 @@ class ApiEventControllerTest {
         // Given
         EventResponse eventResponse = EventResponse.of(
                 1L,
-                1L,
+                createPlaceDto(1L),
                 "오후 운동",
                 EventStatus.OPENED,
                 LocalDateTime.of(2021, 1, 1, 13, 0, 0),
@@ -140,7 +142,7 @@ class ApiEventControllerTest {
         // Given
         EventResponse eventResponse = EventResponse.of(
                 1L,
-                0L,
+                createPlaceDto(0L),
                 "  ",
                 null,
                 null,
@@ -218,7 +220,7 @@ class ApiEventControllerTest {
         long eventId = 1L;
         EventResponse eventResponse = EventResponse.of(
                 eventId,
-                1L,
+                createPlaceDto(1L),
                 "오후 운동",
                 EventStatus.OPENED,
                 LocalDateTime.of(2021, 1, 1, 13, 0, 0),
@@ -244,6 +246,37 @@ class ApiEventControllerTest {
         then(eventService).should().modifyEvent(eq(eventId), any());
     }
 
+    @DisplayName("[API][PUT] 이벤트 변경 - 잘못된 입력")
+    @Test
+    void givenWrongEventIdAndInfo_whenModifyingAnEvent_thenReturnsSuccessfulStandardResponse() throws Exception {
+        // Given
+        long eventId = 0L;
+        EventResponse eventResponse = EventResponse.of(
+                eventId,
+                createPlaceDto(0L),
+                "  ",
+                null,
+                null,
+                null,
+                -1,
+                0,
+                "마스크 꼭 착용하세요"
+        );
+        // When & Then
+        mvc.perform(
+                        put("/api/events/" + eventId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(mapper.writeValueAsString(eventResponse))
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCode.SPRING_BAD_REQUEST.getCode()))
+                .andExpect(jsonPath("$.message").value(containsString(ErrorCode.SPRING_BAD_REQUEST.getMessage())));
+        then(eventService).shouldHaveNoInteractions();
+    }
+
+
     @DisplayName("[API][DELETE] 이벤트 삭제")
     @Test
     void givenEvent_whenDeletingAnEvent_thenReturnsSuccessfulStandardResponse() throws Exception {
@@ -261,10 +294,27 @@ class ApiEventControllerTest {
         then(eventService).should().removeEvent(eq(eventId));
     }
 
+
+    @DisplayName("[API][DELETE] 이벤트 삭제 - 잘못된 입력")
+    @Test
+    void givenWrongEventId_whenDeletingAnEvent_thenReturnsFailedStandardResponse() throws Exception {
+        // Given
+        long eventId = 0L;
+        // When & Then
+        mvc.perform(delete("/api/events/" + eventId))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCode.VALIDATION_ERROR.getCode()))
+                .andExpect(jsonPath("$.message").value(containsString(ErrorCode.VALIDATION_ERROR.getMessage())));
+        then(eventService).shouldHaveNoInteractions();
+    }
+
+
     private EventDto createEventDTO() {
         return EventDto.of(
                 1L,
-                1L,
+                createPlaceDto(1L),
                 "오후 운동",
                 EventStatus.OPENED,
                 LocalDateTime.of(2021, 1, 1, 13, 0, 0),
@@ -276,4 +326,19 @@ class ApiEventControllerTest {
                 LocalDateTime.now()
         );
     }
+
+    private PlaceDto createPlaceDto(Long placeId) {
+        return PlaceDto.of(
+                placeId,
+                PlaceType.COMMON,
+                "배드민턴장",
+                "서울시 가나구 다라동",
+                "010-1111-2222",
+                10,
+                null,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+    }
+
 }
