@@ -1,9 +1,10 @@
 package com.example.getInLine.repository;
 
+import com.example.getInLine.domain.Event;
+import com.example.getInLine.domain.QEvent;
+import com.example.getInLine.repository.querydsl.EventRepositoryCustom;
 import com.querydsl.core.types.dsl.ComparableExpression;
 import com.querydsl.core.types.dsl.StringExpression;
-import  com.example.getInLine.domain.Event;
-import  com.example.getInLine.domain.QEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -11,6 +12,7 @@ import org.springframework.data.querydsl.binding.QuerydslBindings;
 
 public interface EventRepository extends
         JpaRepository<Event, Long>,
+        EventRepositoryCustom,
         QuerydslPredicateExecutor<Event>,
         QuerydslBinderCustomizer<QEvent> {
     @Override
