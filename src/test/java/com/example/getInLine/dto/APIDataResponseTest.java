@@ -15,7 +15,7 @@ class APIDataResponseTest {
         //Given
         String data = "test Data";
         //When
-        APIDataResponse<String> response = APIDataResponse.of(data);
+        ApiDataResponse<String> response = ApiDataResponse.of(data);
         //Then
         //assertJ는 data를 chaining 방식으로 테스트해볼수있다.
         assertThat(response)
@@ -33,7 +33,7 @@ class APIDataResponseTest {
         //Given
 
         //When
-        APIDataResponse<String> response = APIDataResponse.empty();
+        ApiDataResponse<String> response = ApiDataResponse.empty();
         //Then
         //assertJ는 data를 chaining 방식으로 테스트해볼수있다.
         assertThat(response)

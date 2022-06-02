@@ -4,11 +4,14 @@ import com.example.getInLine.constant.ErrorCode;
 import com.example.getInLine.constant.EventStatus;
 import com.example.getInLine.domain.Place;
 import com.example.getInLine.dto.EventDto;
+import com.example.getInLine.dto.EventViewResponse;
 import com.example.getInLine.exception.GeneralException;
 import com.example.getInLine.repository.EventRepository;
 import com.example.getInLine.repository.PlaceRepository;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,15 +37,22 @@ public class EventService {
     }
 
 
-    public List<EventDto> getEvents(
-            Long placeId,
+    public Page<EventViewResponse> getEventViewResponse(
+            String placeName,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
-            LocalDateTime eventEndDatetime
-    ) {
+            LocalDateTime eventEndDatetime,
+            Pageable pageable) {
         try {
-            return null;
+            return eventRepository.findEventViewPageBySearchParams(
+                    placeName,
+                    eventName,
+                    eventStatus,
+                    eventStartDatetime,
+                    eventEndDatetime,
+                    pageable
+            );
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
         }
@@ -100,4 +110,6 @@ public class EventService {
         }
 
     }
+
+
 }
