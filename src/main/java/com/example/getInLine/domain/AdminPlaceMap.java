@@ -34,11 +34,11 @@ public class AdminPlaceMap {
     private Place place;
 
     @Column(nullable = false, insertable = false, updatable = false,
-            columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+            columnDefinition = "datetime default CURRENT_TIMESTAMP")
     @CreatedDate
     private LocalDateTime createdAt;
     @Column(nullable = false, insertable = false, updatable = false,
-            columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+            columnDefinition = "datetime default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
