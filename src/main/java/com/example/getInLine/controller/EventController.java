@@ -33,8 +33,8 @@ import java.util.Map;
 public class EventController {
 
 
-    private final EventService eventService;
 
+    private final EventService eventService;
     @GetMapping
     public ModelAndView events(@QuerydslPredicate(root = Event.class) Predicate predicate) {
         Map<String, Object> map = new HashMap<>();
@@ -42,9 +42,7 @@ public class EventController {
                 .stream()
                 .map(EventResponse::from)
                 .toList();
-
         map.put("events", events);
-
         return new ModelAndView("event/index", map);
     }
 
